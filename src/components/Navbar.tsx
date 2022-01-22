@@ -1,15 +1,26 @@
 import Link from "next/link";
 import { BsCart } from "react-icons/bs";
 import { MdOutlinePersonOutline } from "react-icons/md";
-import { auth } from "../../firebase";
-import { GoogleAuthProvider, signInWithRedirect, User } from "firebase/auth";
+import { provider } from "../../firebase";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithRedirect,
+  User,
+} from "firebase/auth";
 import { useState } from "react";
 
 const Navbar: React.FC = () => {
-  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, (res) => {
+    setUser(res);
+  });
+  const [user, setUser] = useState<User | null>();
   const signIn = () => {
     signInWithRedirect(auth, provider);
   };
+
   return (
     <div className="flex x-10 w-screen h-16 bg-[#1E2125] items-center px-5 justify-between">
       <h1 className="text-4xl font-bold cursor-pointer">
@@ -26,17 +37,18 @@ const Navbar: React.FC = () => {
         <div
           onClick={() => {
             if (auth.currentUser) {
-              console.log(auth.currentUser?.photoURL);
+              console.log(user?.photoURL);
+              auth.signOut();
             } else {
               signIn();
             }
           }}
           style={{
-            backgroundImage: `url(${auth.currentUser?.photoURL})` || "",
+            backgroundImage: `url(${user?.photoURL})` || "",
           }}
           className="flex cursor-pointer bg-cover bg-center justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300 text-xl"
         >
-          {/* <MdOutlinePersonOutline /> */}
+          {user ? "" : <MdOutlinePersonOutline />}
         </div>
       </div>
     </div>
