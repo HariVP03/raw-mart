@@ -13,7 +13,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className="flex flex-col h-screen w-screen flex-wrap text-gray-300 bg-[#2A3A47]">
+        <div className="flex flex-col h-screen w-screen flex-wrap text-gray-200 bg-primary">
           <Navbar />
           <div className="flex mt-5 flex-wrap w-screen ">
             <BuyCard
