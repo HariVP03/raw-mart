@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
           style={{
             backgroundImage: `url(${user?.photoURL})` || "",
           }}
-          className="flex cursor-pointer bg-cover bg-center justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300 text-xl border-2"
+          className="flex cursor-pointer bg-cover bg-center justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300 text-xl"
         >
           {user ? "" : <MdOutlinePersonOutline />}
         </div>
