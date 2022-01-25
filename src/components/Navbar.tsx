@@ -12,8 +12,16 @@ import { useState } from "react";
 import { setUser } from "../features/user";
 import { useSelector, useDispatch } from "react-redux";
 import { userState } from "../store";
+import Cart from "./Cart";
 
 const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const onOpen = () => {
+    setIsOpen(true);
+  };
+  const onClose = () => {
+    setIsOpen(false);
+  };
   const auth = getAuth();
   const user = useSelector((state: userState) => state.user.value);
   const dispatch = useDispatch();
@@ -33,8 +41,14 @@ const Navbar: React.FC = () => {
         className="text-gray-200 border-[1px] border-none transition-outline duration-100 bg-search focus:outline-highlight focus:outline-1 w-[75%] h-[60%] text-md px-2 placeholder:italic placeholder:text-slate-400 outline-none"
         placeholder="Search..."
       ></input>
+      <Cart isOpen={isOpen} onClose={onClose} />
       <div className="flex gap-5">
-        <button className="flex justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300">
+        <button
+          onClick={() => {
+            onOpen();
+          }}
+          className="flex justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300"
+        >
           <BsCart />
         </button>
         <div

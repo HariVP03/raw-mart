@@ -36,7 +36,7 @@ const BuyCard: React.FC<{
         {productName}
       </div>
       <div className="mt-1 text-gray-400 ml-4">Price</div>
-      <div className="flex text-[18px] mx-4 font-extrabold ">
+      <div className="flex text-[18px] mx-4 font-extrabold">
         <div>
           {currenciesObj[currency].symbol}
           {currentPrice.toLocaleString()}

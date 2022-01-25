@@ -6,6 +6,7 @@ import prisma from "../lib/prisma";
 import { useSelector } from "react-redux";
 import { userState } from "../src/store";
 import { item } from "../types/collectionTypes";
+import Cart from "../src/components/Cart";
 
 export const getStaticProps: GetStaticProps = async () => {
   const items = await prisma.item.findMany();
