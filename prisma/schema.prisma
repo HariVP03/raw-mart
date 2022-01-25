@@ -1,0 +1,41 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model item {
+  id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name        String
+  price       Int
+  currency    String
+  sale        Boolean? @default(false)
+  discount    Int?     @default(0)
+  description String
+  reviews     Int?     @default(0)
+  stock       Int
+  seller      seller   @relation(fields: [sellerId], references: [id])
+  sellerId    String   @db.ObjectId
+  cart        cart?    @relation(fields: [cartUserId], references: [userId])
+  cartUserId  String?  @db.ObjectId
+  category    String
+  images      String[]
+}
+
+model seller {
+  id      String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name    String
+  email   String @unique
+  address String
+  items   item[]
+}
+
+model cart {
+  userId String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  email  String @unique
+  items  item[]
+}

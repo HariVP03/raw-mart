@@ -1,9 +1,20 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import BuyCard from "../src/components/BuyCard";
 import Navbar from "../src/components/Navbar";
+import prisma from "../lib/prisma";
+import { useSelector } from "react-redux";
+import { userState } from "../src/store";
+import { item } from "../types/collectionTypes";
 
-const Home: NextPage = () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const items = await prisma.item.findMany();
+  return {
+    props: { items },
+  };
+};
+
+const Home: NextPage<{ items: item[] }> = ({ items }) => {
   return (
     <div>
       <Head>
@@ -16,25 +27,19 @@ const Home: NextPage = () => {
         <div className="flex flex-col h-screen w-screen flex-wrap text-gray-200 bg-primary">
           <Navbar />
           <div className="flex mt-5 flex-wrap w-screen ">
-            <BuyCard
-              category="Houses"
-              prodImage={[
-                "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80",
-              ]}
-              currency="$"
-              price={12000000}
-              productName="My humble aboard"
-            />
-            <BuyCard
-              prodImage={[
-                "https://images.unsplash.com/photo-1564557287817-3785e38ec1f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-              ]}
-              category="Clothing"
-              currency="$"
-              price={100}
-              prevPrice={350}
-              productName="White Hoodie"
-            />
+            {items.map((e) => {
+              return (
+                <BuyCard
+                  prodImage={e.images}
+                  category={e.category}
+                  currency={e.currency}
+                  price={e.price}
+                  productName={e.name}
+                  discount={e.discount}
+                  key={e.id}
+                />
+              );
+            })}
           </div>
         </div>
       </main>

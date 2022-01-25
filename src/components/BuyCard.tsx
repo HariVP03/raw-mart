@@ -1,19 +1,30 @@
+import { currencies } from "../../lib/utilities/currencies";
+
 const BuyCard: React.FC<{
   prodImage: string[];
   category: string;
   productName: string;
   price: number;
   currency: string;
-  prevPrice?: number;
+  discount?: number;
 }> = ({
   prodImage,
   category = "Hmmmm",
   productName = "Something went wrong... :(",
   price = 0,
-  prevPrice,
-  currency = "$",
+  discount = 0,
+  currency = "USD",
 }) => {
-  const img = prodImage[0];
+  const img = prodImage ? prodImage[0] : "";
+  let currentPrice;
+  let prevPrice;
+  if (discount === 0) {
+    currentPrice = price;
+  } else {
+    currentPrice = price * (1 - discount / 100);
+    prevPrice = price;
+  }
+  let currenciesObj = currencies as any;
   return (
     <div className="flex bg-[#1C2025] mb-5 mx-5 flex-col cursor-pointer w-[230px] h-[280px] rounded-lg border-gray-800 border-[1px] border-solid font-sans transition-all shadow-md duration-200 hover:shadow-lg hover:scale-105 hover:z-10">
       <div
@@ -27,10 +38,10 @@ const BuyCard: React.FC<{
       <div className="mt-1 text-gray-400 ml-4">Price</div>
       <div className="flex text-[18px] mx-4 font-extrabold ">
         <div>
-          {currency}
-          {price.toLocaleString()}
+          {currenciesObj[currency].symbol}
+          {currentPrice.toLocaleString()}
         </div>
-        {prevPrice && prevPrice !== price ? (
+        {discount !== 0 && prevPrice ? (
           <div className="line-through text-gray-400 ml-5">
             {currency}
             {prevPrice.toLocaleString()}
