@@ -24,4 +24,5 @@ export type seller = {
 export type cart = {
   id: string;
   email: string;
+  items: item[];
 };

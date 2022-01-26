@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BsCart } from "react-icons/bs";
 import { MdOutlinePersonOutline } from "react-icons/md";
-import { provider } from "../../firebase";
+import { provider, auth } from "../../firebase";
 import {
   getAuth,
   onAuthStateChanged,
@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
   const onClose = () => {
     setIsOpen(false);
   };
-  const auth = getAuth();
+  // const auth = getAuth();
   const user = useSelector((state: userState) => state.user.value);
   const dispatch = useDispatch();
   onAuthStateChanged(auth, (res) => {
