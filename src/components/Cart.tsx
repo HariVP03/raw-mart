@@ -45,8 +45,11 @@ const Cart: React.FC<{
             <AiOutlineArrowRight />
           </button>
         </div>
-        {data
-          ? data?.map((f: any) => {
+        {data === null
+          ? "Loading..."
+          : data === []
+          ? "No items in your cart"
+          : data?.map((f: any) => {
               let e = f.item;
               return (
                 <CartItem
@@ -58,8 +61,7 @@ const Cart: React.FC<{
                   productName={e.name}
                 />
               );
-            })
-          : "No item in your cart"}
+            })}
       </div>
     </div>
   );

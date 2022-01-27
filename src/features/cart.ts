@@ -9,7 +9,7 @@ type item = {
   discount?: number;
 };
 
-const initialValue = [] as any;
+const initialValue = null as any;
 
 export const cartSlice = createSlice({
   name: "cart",

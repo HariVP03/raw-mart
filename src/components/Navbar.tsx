@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
   onAuthStateChanged(auth, (res) => {
     if (!res) return;
     dispatch(setUser(JSON.stringify(res)));
-    if (cart.length === 0 && loading) {
+    if (cart === null && loading) {
       getData(res.email || "");
       setLoading(false);
     }
@@ -64,6 +64,7 @@ const Navbar: React.FC = () => {
       <input
         className="text-gray-200 border-[1px] border-none transition-outline duration-100 bg-search focus:outline-highlight focus:outline-1 w-[75%] h-[60%] text-md px-2 placeholder:italic placeholder:text-slate-400 outline-none"
         placeholder="Search..."
+        onClick={() => console.log(auth.currentUser)}
       ></input>
       <Cart isOpen={isOpen} onClose={onClose} />
       <div className="flex gap-5">
