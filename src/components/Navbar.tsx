@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
 
   const user = JSON.parse(
     useSelector((state: userState) => state.user.value) || "{}"
-  ) as User | null;
+  ) as User;
   const cart = useSelector((state: userState) => state.cart.value);
 
   const getData = async (email: string) => {
@@ -85,12 +85,14 @@ const Navbar: React.FC = () => {
             }
           }}
           style={{
-            backgroundImage: `url(${user?.photoURL})` || "",
+            backgroundImage: Boolean(user.toJSON)
+              ? `url(${user?.photoURL})`
+              : `url(https://avatars.dicebear.com/api/avataaars/${(
+                  Math.random() * 1000
+                ).toString()}.png)`,
           }}
           className="flex cursor-pointer bg-cover bg-center justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300 text-xl"
-        >
-          {user ? "" : <MdOutlinePersonOutline />}
-        </div>
+        ></div>
       </div>
     </div>
   );
