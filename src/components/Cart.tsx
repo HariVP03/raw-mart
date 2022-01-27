@@ -53,6 +53,7 @@ const Cart: React.FC<{
               let e = f.item;
               return (
                 <CartItem
+                  id={e.id}
                   category={e.category}
                   currency={e.currency}
                   price={e.price}

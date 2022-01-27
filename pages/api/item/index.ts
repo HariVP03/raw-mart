@@ -1,4 +1,4 @@
-import prisma from "../../lib/prisma";
+import prisma from "../../../lib/prisma";
 
 const handle = async (req: Request, res: any) => {
   const temp = req.body as any;

@@ -46,10 +46,10 @@ const Navbar: React.FC = () => {
   onAuthStateChanged(auth, (res) => {
     if (!res) return;
     dispatch(setUser(JSON.stringify(res)));
+    setAvatar(`url(${res.photoURL})`);
     if (cart === null && loading) {
       getData(res.email || "");
       setLoading(false);
-      setAvatar(`url(${res.photoURL})`);
     }
   });
 

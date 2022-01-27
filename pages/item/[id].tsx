@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { auth } from "../../firebase";
 import prisma from "../../lib/prisma";
 import { currencies } from "../../lib/utilities/currencies";
 import Navbar from "../../src/components/Navbar";
@@ -17,12 +18,12 @@ const ProductPage: React.FC = () => {
   const [currency, setCurrency] = useState("INR");
   const [images, setImages] = useState([""]);
 
-  const getItem = async (id: string) => {
-    fetch("/api/item", {
-      method: "POST",
+  const getItem = async () => {
+    fetch(`/api/item/${id}`, {
+      method: "GET",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ id }),
     }).then((res) => {
+      console.log(res);
       res.json().then((item: item) => {
         setProductName(item?.name || "");
         setDesc(item?.description || "");
@@ -35,14 +36,10 @@ const ProductPage: React.FC = () => {
   };
 
   useEffect(() => {
-    let temp: string;
-    if (typeof id !== "string") {
-      temp = id?.toString() || "";
-    } else {
-      temp = id;
+    if (router.query.id) {
+      getItem();
     }
-    getItem(temp);
-  }, []);
+  }, [router.query]);
 
   useEffect(() => {
     setPrevPrice(price * (1 - discount / 100));
@@ -81,7 +78,12 @@ const ProductPage: React.FC = () => {
             )}
           </div>
           <div className="flex mx-5 text-xl mt-10">Description</div>
-          <button className="font-semibold text-xl hover:scale-105 duration-200 hover:bg-sky-300 rounded-lg h-[60px] w-[180px] text-gray-700 bg-highlight ml-5 mt-10">
+          <button
+            onClick={() => {
+              console.log(auth.currentUser);
+            }}
+            className="font-semibold text-xl hover:scale-105 duration-200 hover:bg-sky-300 rounded-lg h-[60px] w-[180px] text-gray-700 bg-highlight ml-5 mt-10"
+          >
             Add to cart
           </button>
         </div>
