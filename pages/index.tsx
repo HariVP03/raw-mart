@@ -4,15 +4,25 @@ import BuyCard from "../src/components/BuyCard";
 import Navbar from "../src/components/Navbar";
 import prisma from "../lib/prisma";
 import { item } from "../types/collectionTypes";
+import { useEffect, useState } from "react";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const items = await prisma.item.findMany();
-  return {
-    props: { items },
+const Home: NextPage = () => {
+  const [items, setItems] = useState<item[] | null>();
+  const getItems = async () => {
+    fetch("/api/items", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => {
+      res.json().then((data) => {
+        setItems(data);
+      });
+    });
   };
-};
 
-const Home: NextPage<{ items: item[] }> = ({ items }) => {
+  useEffect(() => {
+    getItems();
+  }, []);
+
   return (
     <div>
       <Head>
@@ -25,7 +35,7 @@ const Home: NextPage<{ items: item[] }> = ({ items }) => {
         <div className="flex flex-col h-screen w-screen flex-wrap text-gray-200 bg-primary">
           <Navbar />
           <div className="flex mt-5 flex-wrap w-screen ">
-            {items.map((e) => {
+            {items?.map((e) => {
               return (
                 <BuyCard
                   prodImage={e.images}

@@ -13,12 +13,19 @@ import { setCart } from "../features/cart";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
   const onOpen = () => {
     setIsOpen(true);
   };
   const onClose = () => {
     setIsOpen(false);
   };
+
+  const user = JSON.parse(
+    useSelector((state: userState) => state.user.value) || "{}"
+  ) as User | null;
+  const cart = useSelector((state: userState) => state.cart.value);
 
   const getData = async (email: string) => {
     fetch("/api/cart", {
@@ -32,31 +39,21 @@ const Navbar: React.FC = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         dispatch(setCart(data));
       });
   };
-  const user = JSON.parse(
-    useSelector((state: userState) => state.user.value) || "{}"
-  ) as User | null;
-  const cart = useSelector((state: userState) => state.cart.value);
 
-  const dispatch = useDispatch();
   onAuthStateChanged(auth, (res) => {
     if (!res) return;
     dispatch(setUser(JSON.stringify(res)));
     if (cart.length === 0 && loading) {
       getData(res.email || "");
-      console.log("GET request sent");
       setLoading(false);
     }
   });
 
   const signIn = () => {
     signInWithRedirect(auth, provider);
-  };
-  const test = () => {
-    console.log(cart);
   };
 
   return (
@@ -81,7 +78,6 @@ const Navbar: React.FC = () => {
         <div
           onClick={() => {
             if (auth.currentUser) {
-              console.log(user?.photoURL);
               auth.signOut();
             } else {
               signIn();
