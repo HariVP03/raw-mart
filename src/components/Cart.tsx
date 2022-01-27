@@ -1,16 +1,17 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { auth } from "../../firebase";
 import prisma from "../../lib/prisma";
 import { cart, item } from "../../types/collectionTypes";
+import { store, userState } from "../store";
 import CartItem from "./CartItem";
 
 const Cart: React.FC<{
   isOpen: boolean;
   onClose: () => void;
 }> = ({ isOpen, onClose }) => {
-  const [data, setData] = useState<{ item: item }[]>();
-  const [loading, setLoading] = useState(false);
-
   const test = async () => {
     fetch("/api/test", {
       method: "POST",
@@ -24,25 +25,7 @@ const Cart: React.FC<{
       });
   };
 
-  const getData = async () => {
-    setLoading(true);
-    fetch("/api/cart", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+  const data = useSelector((state: userState) => state.cart.value);
   return (
     <div
       style={{
@@ -62,10 +45,8 @@ const Cart: React.FC<{
             <AiOutlineArrowRight />
           </button>
         </div>
-        {loading
-          ? "Loading..."
-          : data
-          ? data?.map((f) => {
+        {data
+          ? data?.map((f: any) => {
               let e = f.item;
               return (
                 <CartItem

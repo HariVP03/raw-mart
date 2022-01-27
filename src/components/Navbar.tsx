@@ -2,34 +2,61 @@ import Link from "next/link";
 import { BsCart } from "react-icons/bs";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { provider, auth } from "../../firebase";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithRedirect,
-  User,
-} from "firebase/auth";
+import { onAuthStateChanged, signInWithRedirect, User } from "firebase/auth";
 import { useState } from "react";
 import { setUser } from "../features/user";
 import { useSelector, useDispatch } from "react-redux";
 import { userState } from "../store";
 import Cart from "./Cart";
+import { setCart } from "../features/cart";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const onOpen = () => {
     setIsOpen(true);
   };
   const onClose = () => {
     setIsOpen(false);
   };
-  // const auth = getAuth();
-  const user = useSelector((state: userState) => state.user.value);
+
+  const getData = async (email: string) => {
+    fetch("/api/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        dispatch(setCart(data));
+      });
+  };
+  const user = JSON.parse(
+    useSelector((state: userState) => state.user.value) || "{}"
+  ) as User | null;
+  const cart = useSelector((state: userState) => state.cart.value);
+
   const dispatch = useDispatch();
   onAuthStateChanged(auth, (res) => {
-    dispatch(setUser(res));
+    if (!res) return;
+    dispatch(setUser(JSON.stringify(res)));
+    if (cart.length === 0 && loading) {
+      getData(res.email || "");
+      console.log("GET request sent");
+      setLoading(false);
+    }
   });
+
   const signIn = () => {
     signInWithRedirect(auth, provider);
+  };
+  const test = () => {
+    console.log(cart);
   };
 
   return (

@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 
-const initialValue = null as User | null;
-
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    value: initialValue,
+    value: "",
   },
   reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
+    setUser: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
   },
