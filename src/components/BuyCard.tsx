@@ -1,6 +1,8 @@
+import router from "next/router";
 import { currencies } from "../../lib/utilities/currencies";
 
 const BuyCard: React.FC<{
+  id: string;
   prodImage: string[];
   category: string;
   productName: string;
@@ -8,6 +10,7 @@ const BuyCard: React.FC<{
   currency: string;
   discount?: number;
 }> = ({
+  id,
   prodImage,
   category = "Hmmmm",
   productName = "Something went wrong... :(",
@@ -26,7 +29,12 @@ const BuyCard: React.FC<{
   }
   let currenciesObj = currencies as any;
   return (
-    <div className="flex bg-[#1C2025] mb-5 mx-5 flex-col cursor-pointer w-[230px] h-[280px] rounded-lg border-gray-800 border-[1px] border-solid font-sans transition-all shadow-md duration-200 hover:shadow-lg hover:scale-105 hover:z-10">
+    <div
+      onClick={() => {
+        router.push(`/item/${id}`);
+      }}
+      className="flex bg-[#1C2025] mb-5 mx-5 flex-col cursor-pointer w-[230px] h-[280px] rounded-lg border-gray-800 border-[1px] border-solid font-sans transition-all shadow-md duration-200 hover:shadow-lg hover:scale-105 hover:z-10"
+    >
       <div
         className="flex w-full h-[50%] bg-cover rounded-t-lg bg-center border-b-gray-300 bg-red-50"
         style={{ backgroundImage: `url('${img}')` }}

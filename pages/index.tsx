@@ -38,6 +38,7 @@ const Home: NextPage = () => {
             {items?.map((e) => {
               return (
                 <BuyCard
+                  id={e.id}
                   prodImage={e.images}
                   category={e.category}
                   currency={e.currency}
