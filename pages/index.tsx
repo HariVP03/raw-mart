@@ -32,7 +32,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className="flex flex-col h-screen w-screen flex-wrap text-gray-200 bg-primary">
+        <div className="flex flex-col h-screen w-screen text-gray-200 bg-primary">
           <Navbar />
           <div className="flex mt-5 flex-wrap w-screen">
             {items?.map((e) => {

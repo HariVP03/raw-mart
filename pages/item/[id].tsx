@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCart } from "react-icons/bs";
@@ -24,7 +25,6 @@ const ProductPage: React.FC = () => {
       method: "GET",
       headers: { "content-type": "application/json" },
     }).then((res) => {
-      console.log(res);
       res.json().then((item: item) => {
         setProductName(item?.name || "");
         setDesc(item?.description || "");
@@ -48,9 +48,9 @@ const ProductPage: React.FC = () => {
 
   return (
     <>
-      <head>
+      <Head>
         <title>{productName}</title>
-      </head>
+      </Head>
       <div className="w-screen items-center h-screen bg-primary flex flex-col overflow-scroll">
         <Navbar />
         <div className="h-[95%] w-[95%] flex">
@@ -70,13 +70,13 @@ const ProductPage: React.FC = () => {
               <h2 className="text-xl text-gray-400 ml-5">
                 {tempCurrencies[currency].symbol}
               </h2>
-              <h2 className="text-3xl">{price}</h2>
+              <h2 className="text-3xl">{prevPrice}</h2>
               {discount !== 0 ? (
                 <div className="flex font-semibold line-through items-center">
                   <h2 className="text-xl text-gray-400 ml-5">
                     {tempCurrencies[currency].symbol}
                   </h2>
-                  <h2 className="text-3xl text-gray-400">{prevPrice}</h2>
+                  <h2 className="text-3xl text-gray-400">{price}</h2>
                 </div>
               ) : (
                 ""

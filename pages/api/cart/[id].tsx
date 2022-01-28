@@ -1,8 +1,7 @@
-import prisma from "../../lib/prisma";
+import prisma from "../../../lib/prisma";
 
-const handle = async (req: Request, res: any) => {
-  let temp = req.body as any;
-  let email = temp.email;
+const handle = async (req: any, res: any) => {
+  let email = req.query.id;
   const items = await prisma.itemsInCart.findMany({
     where: {
       email: {

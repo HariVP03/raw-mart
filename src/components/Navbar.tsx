@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { userState } from "../store";
 import Cart from "./Cart";
 import { setCart } from "../features/cart";
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,12 +29,9 @@ const Navbar: React.FC = () => {
   const cart = useSelector((state: userState) => state.cart.value);
 
   const getData = async (email: string) => {
-    fetch("/api/cart", {
-      method: "POST",
+    fetch(`/api/cart/${email}`, {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-      }),
     })
       .then((res) => {
         return res.json();
@@ -46,7 +44,7 @@ const Navbar: React.FC = () => {
   onAuthStateChanged(auth, (res) => {
     if (!res) return;
     dispatch(setUser(JSON.stringify(res)));
-    setAvatar(`url(${res.photoURL})`);
+    setAvatar(res.photoURL || "");
     if (cart === null && loading) {
       getData(res.email || "");
       setLoading(false);
@@ -58,9 +56,9 @@ const Navbar: React.FC = () => {
   };
 
   const [avatar, setAvatar] = useState(
-    `url(https://avatars.dicebear.com/api/avataaars/${(
+    `https://avatars.dicebear.com/api/avataaars/${(
       Math.random() * 1000
-    ).toString()}.png)`
+    ).toString()}.png`
   );
 
   return (
@@ -71,7 +69,7 @@ const Navbar: React.FC = () => {
       <input
         className="text-gray-200 border-[1px] border-none transition-outline duration-100 bg-search focus:outline-highlight focus:outline-1 w-[75%] h-[60%] text-md px-2 placeholder:italic placeholder:text-slate-400 outline-none"
         placeholder="Search..."
-        onClick={() => console.log(auth.currentUser)}
+        onClick={() => console.log(avatar)}
       ></input>
       <Cart isOpen={isOpen} onClose={onClose} />
       <div className="flex gap-5">
@@ -83,7 +81,10 @@ const Navbar: React.FC = () => {
         >
           <BsCart />
         </button>
-        <div
+        <Image
+          alt="Profile picture"
+          height="40px"
+          width="40px"
           onClick={() => {
             if (auth.currentUser) {
               auth.signOut();
@@ -91,11 +92,9 @@ const Navbar: React.FC = () => {
               signIn();
             }
           }}
-          style={{
-            backgroundImage: avatar,
-          }}
+          src={avatar}
           className="flex cursor-pointer bg-cover bg-center justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300 text-xl"
-        ></div>
+        />
       </div>
     </div>
   );

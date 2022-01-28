@@ -57,6 +57,7 @@ const Cart: React.FC<{
                   category={e.category}
                   currency={e.currency}
                   price={e.price}
+                  discount={e.discount}
                   prodImage={e.images}
                   key={e.id}
                   productName={e.name}

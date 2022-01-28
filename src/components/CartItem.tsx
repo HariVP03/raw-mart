@@ -50,7 +50,7 @@ const CartItem: React.FC<{
           </div>
           {discount !== 0 && prevPrice ? (
             <div className="line-through text-gray-400 ml-2">
-              {currency}
+              {currenciesObj[currency].symbol}
               {prevPrice.toLocaleString()}
             </div>
           ) : (
