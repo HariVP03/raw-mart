@@ -4,7 +4,7 @@ import { currencies } from "../../lib/utilities/currencies";
 const BuyCard: React.FC<{
   id: string;
   prodImage: string[];
-  category: string;
+  desc: string;
   productName: string;
   price: number;
   currency: string;
@@ -12,7 +12,7 @@ const BuyCard: React.FC<{
 }> = ({
   id,
   prodImage,
-  category = "Hmmmm",
+  desc = "Hmmmm",
   productName = "Something went wrong... :(",
   price = 0,
   discount = 0,
@@ -33,30 +33,37 @@ const BuyCard: React.FC<{
       onClick={() => {
         router.push(`/item/${id}`);
       }}
-      className="flex bg-[#1C2025] mb-5 mx-5 flex-col cursor-pointer w-[230px] h-[280px] rounded-lg border-gray-800 border-[1px] border-solid font-sans transition-all shadow-md duration-200 hover:shadow-lg hover:scale-105 hover:z-10"
+      className="max-w-xs duration-200 cursor-pointer mx-3 hover:scale-105 overflow-hidden bg-white rounded-lg shadow-lg dark:bg-secondary"
     >
-      <div
-        className="flex w-full h-[50%] bg-cover rounded-t-lg bg-center border-b-gray-300 bg-red-50"
-        style={{ backgroundImage: `url('${img}')` }}
-      ></div>
-      <div className="mt-3 ml-4">{category}</div>
-      <div className="mt-1 text-[20px] truncate font-semibold ml-4">
-        {productName}
+      <div className="px-4 py-2">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+          {productName}
+        </h1>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{desc}</p>
       </div>
-      <div className="mt-1 text-gray-400 ml-4">Price</div>
-      <div className="flex text-[18px] mx-4 font-extrabold">
-        <div>
+
+      <img
+        className="object-cover w-full h-48 mt-2"
+        src={img}
+        alt={productName}
+      />
+
+      <div className="flex items-center justify-between px-4 py-2 bg-secondary">
+        <h1 className="text-lg font-bold text-white">
           {currenciesObj[currency].symbol}
-          {currentPrice.toLocaleString()}
-        </div>
-        {discount !== 0 && prevPrice ? (
-          <div className="line-through text-gray-400 ml-5">
-            {currency}
-            {prevPrice.toLocaleString()}
-          </div>
+          {currentPrice}
+        </h1>
+        {discount !== 0 ? (
+          <h1 className="text-lg font-bold text-gray-400">
+            {currenciesObj[currency].symbol}
+            {prevPrice}
+          </h1>
         ) : (
           ""
         )}
+        <button className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-200 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none">
+          Add to cart
+        </button>
       </div>
     </div>
   );

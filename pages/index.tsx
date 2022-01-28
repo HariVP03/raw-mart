@@ -34,13 +34,13 @@ const Home: NextPage = () => {
       <main>
         <div className="flex flex-col h-screen w-screen flex-wrap text-gray-200 bg-primary">
           <Navbar />
-          <div className="flex mt-5 flex-wrap w-screen ">
+          <div className="flex mt-5 flex-wrap w-screen">
             {items?.map((e) => {
               return (
                 <BuyCard
                   id={e.id}
                   prodImage={e.images}
-                  category={e.category}
+                  desc={e.description}
                   currency={e.currency}
                   price={e.price}
                   productName={e.name}

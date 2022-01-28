@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="flex x-10 w-[100vw] h-16 bg-secondary items-center px-5 justify-between text-gray-200">
-      <h1 className="text-4xl font-bold cursor-pointer font-logo">
+      <h1 className="text-3xl font-bold cursor-pointer font-logo">
         <Link href="/">店 Mart</Link>
       </h1>
       <input
