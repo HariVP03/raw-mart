@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 
-const handle = async (req: Request, res: any) => {
+const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const test = await prisma.itemsInCart.create({
     data: {
       email: "harryskotch11@gmail.com",

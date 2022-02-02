@@ -33,7 +33,7 @@ const CartItem: React.FC<{
       onClick={() => {
         router.push(`/item/${id}`);
       }}
-      className="flex cursor-pointer items-center hover:scale-105 hover:z-10 duration-200 rounded-md my-3 min-h-[128px] w-[95%] bg-primary"
+      className="flex cursor-pointer items-center hover:scale-105 hover:z-10 duration-200 rounded-md my-3 min-h-[128px] w-[100%] bg-primary"
     >
       <div
         className="flex mx-2 w-[40%] h-[90%] bg-cover rounded-lg bg-center border-b-gray-300 bg-red-50"

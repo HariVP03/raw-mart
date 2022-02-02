@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Karla&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comforter&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +9,7 @@
 div {
   color: white;
   scrollbar-width: none;
-  font-family: "Karla", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 ::-webkit-scrollbar {
   display: none;

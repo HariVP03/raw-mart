@@ -16,7 +16,7 @@ module.exports = {
       },
       fontFamily: {
         sans: "'Karla', sans-serif;",
-        logo: "'Cabin', sans-serif;",
+        logo: "'Comforter', cursive;",
       },
     },
   },

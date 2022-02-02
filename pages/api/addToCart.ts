@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 
-const handle = async (req: any, res: any) => {
+const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, itemId } = req.body;
   const exists = await prisma.itemsInCart.count({
     where: {
