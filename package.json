@@ -3,8 +3,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "d": "next dev",
     "build": "npx prisma generate && next build",
-    "start": "next start",
+    "start": "npx prisma generate && next build && next start",
+    "s": "npx prisma generate && next build && next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -24,7 +26,9 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",
-    "react-spinners": "^0.11.0"
+    "react-responsive-carousel": "^3.2.22",
+    "react-spinners": "^0.11.0",
+    "swiper": "^8.0.2"
   },
   "devDependencies": {
     "@types/node": "17.0.10",

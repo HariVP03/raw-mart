@@ -75,6 +75,7 @@ const BuyCard: React.FC<{
         width="512px"
         height="450px"
       />
+
       <h4 className="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200">
         {productName}
       </h4>
@@ -99,7 +100,6 @@ const BuyCard: React.FC<{
           addToCart();
         }}
         variant="ghost"
-        // className="flex z-30 items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

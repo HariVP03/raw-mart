@@ -17,6 +17,11 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Portal,
 } from "@chakra-ui/react";
 
 const Navbar: React.FC = () => {
@@ -70,7 +75,7 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <div className="flex x-10 w-[100vw] h-16 bg-secondary items-center justify-between align-center text-gray-200">
+    <div className="flex fixed px-10 z-20 max-w-[100vw] min-w-[100vw] h-[9vh] bg-secondary items-center justify-between align-center text-gray-200">
       <h1 className="text-3xl w-32 text-center font-bold cursor-pointer font-logo ml-5">
         <Link href="/">店 Mart</Link>
       </h1>
@@ -100,21 +105,33 @@ const Navbar: React.FC = () => {
         >
           <BsCart />
         </Button>
-        <Avatar
-          alt="Profile picture"
-          cursor="pointer"
-          height="40px"
-          bg="green"
-          width="40px"
-          onClick={() => {
-            if (auth.currentUser) {
-              auth.signOut();
-            } else {
-              signIn();
-            }
-          }}
-          src={avatar}
-        />
+
+        <Menu>
+          <MenuButton
+            as={Avatar}
+            alt="Profile picture"
+            cursor="pointer"
+            height="40px"
+            bg="green"
+            width="40px"
+            src={avatar}
+          />
+          <Portal>
+            <MenuList zIndex="30" bg="secondary">
+              {user ? (
+                <>
+                  <MenuItem>Your Cart</MenuItem>
+                  <MenuItem>Sign Out</MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem>Sign in with Google</MenuItem>
+                  <MenuItem>Sign in with GitHub</MenuItem>
+                </>
+              )}
+            </MenuList>
+          </Portal>
+        </Menu>
       </div>
     </div>
   );

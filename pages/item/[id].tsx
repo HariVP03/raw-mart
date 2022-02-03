@@ -1,7 +1,26 @@
+import {
+  Box,
+  Button,
+  chakra,
+  Container,
+  Text,
+  Flex,
+  Heading,
+  Image,
+  List,
+  ListItem,
+  SimpleGrid,
+  Stack,
+  StackDivider,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCart } from "react-icons/bs";
+import { MdLocalShipping } from "react-icons/md";
+import { Carousel } from "react-responsive-carousel";
 import { auth } from "../../firebase";
 import prisma from "../../lib/prisma";
 import { currencies } from "../../lib/utilities/currencies";
@@ -16,9 +35,9 @@ const ProductPage: React.FC = () => {
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState(0);
   const [prevPrice, setPrevPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState<number | undefined>(0);
   const [currency, setCurrency] = useState("USD");
-  const [images, setImages] = useState([""]);
+  const [images, setImages] = useState<string[]>([""]);
 
   const getItem = async () => {
     fetch(`/api/item/${id}`, {
@@ -28,10 +47,12 @@ const ProductPage: React.FC = () => {
       res.json().then((item: item) => {
         setProductName(item?.name || "");
         setDesc(item?.description || "");
-        setPrice(item?.price || 0);
-        setDiscount(item?.discount || 0);
+        setPrice(item?.price);
+        setPrevPrice(item?.price);
+        setDiscount(item?.discount);
         setCurrency(item?.currency || "INR");
-        setImages(item?.images || [""]);
+        setImages(item?.images);
+        if (discount) setPrevPrice(price * (1 - discount / 100));
       });
     });
   };
@@ -40,10 +61,13 @@ const ProductPage: React.FC = () => {
     if (router.query.id) {
       getItem();
     }
+    if (!discount) setPrevPrice(price);
+    else setPrevPrice(price * (1 - discount / 100));
   }, [router.query]);
 
   useEffect(() => {
-    setPrevPrice(price * (1 - discount / 100));
+    if (!discount) setPrevPrice(price);
+    else setPrevPrice(price * (1 - discount / 100));
   }, [discount]);
 
   return (
@@ -51,45 +75,100 @@ const ProductPage: React.FC = () => {
       <Head>
         <title>{productName}</title>
       </Head>
-      <div className="w-screen items-center h-screen bg-primary flex flex-col overflow-scroll">
-        <Navbar />
-        <div className="h-[95%] w-[95%] flex">
-          <div className="flex h-full w-[50%] flex-col items-center pt-5">
-            <div
-              className="flex bg-black rounded-lg h-[75%] bg-cover w-[85%]"
-              style={{
-                backgroundImage: `url(${images[0]})`,
-              }}
-            ></div>
-          </div>
-          <div className="flex h-full w-[50%] flex-col">
-            <h2 className="text-4xl font-semibold m-5 text-ellipsis overflow-clip">
-              {productName}
-            </h2>
-            <div className="flex font-semibold items-center">
-              <h2 className="text-xl text-gray-400 ml-5">
-                {tempCurrencies[currency].symbol}
-              </h2>
-              <h2 className="text-3xl">{prevPrice}</h2>
-              {discount !== 0 ? (
-                <div className="flex font-semibold line-through items-center">
-                  <h2 className="text-xl text-gray-400 ml-5">
+      <Navbar />
+      <Flex maxW="100vw" minH="100vh" justify="center" bg="primary">
+        <Container maxW={"7xl"}>
+          <SimpleGrid
+            columns={{ base: 1, lg: 2 }}
+            spacing={{ base: 8, md: 10 }}
+            py={{ base: 18, md: 24 }}
+          >
+            <Flex>
+              <Image
+                rounded={"md"}
+                alt={"product image"}
+                src={images[0]}
+                fit={"cover"}
+                align={"center"}
+                w={"100%"}
+                h={{ base: "100%", sm: "400px", lg: "500px" }}
+              />
+            </Flex>
+            <Stack spacing={{ base: 6, md: 10 }}>
+              <Box as={"header"}>
+                <Heading
+                  lineHeight={1.1}
+                  fontWeight={600}
+                  fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+                >
+                  {productName}
+                </Heading>
+                <Flex mt={2}>
+                  <Text
+                    color={useColorModeValue("gray.900", "gray.400")}
+                    fontWeight={300}
+                    fontSize={"2xl"}
+                    mr={2}
+                  >
                     {tempCurrencies[currency].symbol}
-                  </h2>
-                  <h2 className="text-3xl text-gray-400">{price}</h2>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="flex mx-5 text-xl mt-10">{desc}</div>
-            <button className="flex mx-5 max-w-[130px] mt-4 items-center px-2 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-              <BsCart />
-              <span className="mx-1">Add to Cart</span>
-            </button>
-          </div>
-        </div>
-      </div>
+                    {prevPrice}
+                  </Text>
+                  <Text
+                    color={useColorModeValue("gray.900", "gray.400")}
+                    fontWeight={300}
+                    decoration="line-through"
+                    fontSize={"2xl"}
+                  >
+                    {tempCurrencies[currency].symbol}
+                    {price}
+                  </Text>
+                </Flex>
+              </Box>
+
+              <Stack
+                spacing={{ base: 4, sm: 6 }}
+                direction={"column"}
+                divider={
+                  <StackDivider
+                    borderColor={useColorModeValue("gray.200", "gray.600")}
+                  />
+                }
+              >
+                <VStack spacing={{ base: 4, sm: 6 }}>
+                  <Text
+                    color={useColorModeValue("gray.500", "gray.400")}
+                    fontSize={"2xl"}
+                    fontWeight={"300"}
+                    w="full"
+                  >
+                    {desc}
+                  </Text>
+                </VStack>
+              </Stack>
+
+              <Button
+                variant="ghost"
+                mt={8}
+                w="full"
+                bg="secondary"
+                size={"lg"}
+                py={"7"}
+              >
+                Add to cart
+              </Button>
+
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent={"center"}
+              >
+                <MdLocalShipping />
+                <Text>2-3 business days delivery</Text>
+              </Stack>
+            </Stack>
+          </SimpleGrid>
+        </Container>
+      </Flex>
     </>
   );
 };
