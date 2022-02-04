@@ -5,7 +5,7 @@ import { currencies } from "../../lib/utilities/currencies";
 import { setCart } from "../features/cart";
 import { userState } from "../store";
 import Image from "next/image";
-import { Button } from "@chakra-ui/react";
+import { Button, chakra } from "@chakra-ui/react";
 
 const BuyCard: React.FC<{
   id: string;
@@ -62,11 +62,12 @@ const BuyCard: React.FC<{
   };
 
   return (
-    <div
+    <chakra.div
       onClick={() => {
         router.push(`/item/${id}`);
       }}
-      className="flex flex-col items-center justify-center w-72 mx-3 cursor-pointer hover:bg-secondary p-3 rounded-md duration-200"
+      _hover={{ bg: "gray.700" }}
+      className="flex flex-col items-center justify-center w-72 mx-3 cursor-pointer p-3 rounded-md duration-200"
     >
       <Image
         className="object-cover w-full rounded-md h-72"
@@ -111,7 +112,7 @@ const BuyCard: React.FC<{
         </svg>
         <span className="mx-1">Add to cart</span>
       </Button>
-    </div>
+    </chakra.div>
   );
 };
 

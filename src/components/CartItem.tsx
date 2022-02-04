@@ -35,6 +35,7 @@ const CartItem: React.FC<{
     prevPrice = price;
   }
   let currenciesObj = currencies as any;
+
   const cart = useSelector((state: userState) => state.cart.value);
   const dispatch = useDispatch();
   const deleteItem = () => {
@@ -49,12 +50,13 @@ const CartItem: React.FC<{
       return res.json();
     });
   };
+
   return (
     <div
       onClick={() => {
         router.push(`/item/${id}`);
       }}
-      className="flex py-2 cursor-pointer items-center duration-200 rounded-md my-1 min-h-[128px] w-[100%] hover:bg-primary"
+      className="flex py-2 cursor-pointer items-center duration-200 rounded-md my-1 min-h-[128px] w-[100%] hover:bg-gray-700"
     >
       <div
         className="flex mx-2 w-[40%] h-[90%] bg-cover rounded-lg bg-center border-b-gray-300 bg-red-50"

@@ -105,7 +105,7 @@ const ProductPage: React.FC = () => {
         <title>{productName}</title>
       </Head>
       <Navbar />
-      <Flex maxW="100vw" minH="100vh" justify="center" bg="primary">
+      <Flex maxW="100vw" minH="100vh" justify="center">
         <Container maxW={"7xl"}>
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
@@ -176,10 +176,10 @@ const ProductPage: React.FC = () => {
               </Stack>
 
               <Button
-                variant="ghost"
+                variant="outline"
                 mt={8}
                 w="full"
-                bg="secondary"
+                maxW="200px"
                 size={"lg"}
                 py={"7"}
                 onClick={() => {
@@ -189,11 +189,7 @@ const ProductPage: React.FC = () => {
                 Add to cart
               </Button>
 
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent={"center"}
-              >
+              <Stack direction="row" alignItems="center">
                 <MdLocalShipping />
                 <Text>2-3 business days delivery</Text>
               </Stack>

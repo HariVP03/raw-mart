@@ -39,9 +39,9 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className="flex flex-col pb-[10vh] min-h-screen w-screen text-gray-200 bg-primary">
+        <div className="flex flex-col pb-[10vh] min-h-screen w-screen text-gray-200 ">
           <Navbar />
-          <Flex w="100vw" mt="10vh">
+          <Flex w="100vw" mt="9vh">
             <Swiper
               navigation={true}
               modules={[Navigation]}

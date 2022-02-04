@@ -31,7 +31,7 @@ const Cart: React.FC<{
   return (
     <Drawer isOpen={isOpen} onClose={onClose} placement="right" closeOnEsc>
       <DrawerOverlay />
-      <DrawerContent minW="400px" bg="secondary">
+      <DrawerContent minW="400px">
         <DrawerHeader>Cart</DrawerHeader>
         <DrawerCloseButton />
         <DrawerBody p={1} display="flex" flexDir="column">

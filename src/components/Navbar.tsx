@@ -23,6 +23,7 @@ import {
   MenuList,
   Portal,
 } from "@chakra-ui/react";
+import router from "next/router";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +76,7 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <div className="flex fixed px-10 z-20 max-w-[100vw] min-w-[100vw] h-[9vh] bg-secondary items-center justify-between align-center text-gray-200">
+    <div className="flex fixed z-20 max-w-[100vw] min-w-[100vw] h-[9vh] bg-gray-800 items-center justify-between align-center text-gray-200">
       <h1 className="text-3xl w-32 text-center font-bold cursor-pointer font-logo ml-5">
         <Link href="/">店 Mart</Link>
       </h1>
@@ -118,11 +119,13 @@ const Navbar: React.FC = () => {
             onClick={() => console.log(user.photoURL)}
           />
           <Portal>
-            <MenuList zIndex="30" bg="secondary">
+            <MenuList zIndex="30">
               {auth.currentUser ? (
                 <>
                   <MenuItem onClick={() => onOpen()}>Your Cart</MenuItem>
-                  <MenuItem>Sell Item</MenuItem>
+                  <MenuItem onClick={() => router.push("/sell")}>
+                    Sell Item
+                  </MenuItem>
                   <MenuItem onClick={() => auth.signOut()}>Sign Out</MenuItem>
                 </>
               ) : (
