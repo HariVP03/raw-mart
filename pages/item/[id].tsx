@@ -15,16 +15,20 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+import { User } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCart } from "react-icons/bs";
 import { MdLocalShipping } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import { auth } from "../../firebase";
 import prisma from "../../lib/prisma";
 import { currencies } from "../../lib/utilities/currencies";
 import Navbar from "../../src/components/Navbar";
+import { setCart } from "../../src/features/cart";
+import { userState } from "../../src/store";
 import { item } from "../../types/collectionTypes";
 
 const ProductPage: React.FC = () => {
@@ -38,6 +42,11 @@ const ProductPage: React.FC = () => {
   const [discount, setDiscount] = useState<number | undefined>(0);
   const [currency, setCurrency] = useState("USD");
   const [images, setImages] = useState<string[]>([""]);
+  const dispatch = useDispatch();
+  const cart = useSelector((state: userState) => state.cart.value);
+  const user = JSON.parse(
+    useSelector((state: userState) => state.user.value) || "{}"
+  ) as User | null;
 
   const getItem = async () => {
     fetch(`/api/item/${id}`, {
@@ -53,6 +62,26 @@ const ProductPage: React.FC = () => {
         setCurrency(item?.currency || "INR");
         setImages(item?.images);
         if (discount) setPrevPrice(price * (1 - discount / 100));
+      });
+    });
+  };
+
+  const addToCart = () => {
+    if (user === null) return;
+    let temp = JSON.parse(JSON.stringify(cart));
+    const email = user.email;
+    fetch("/api/addToCart", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, itemId: id }),
+    }).then((res) => {
+      res.json().then((data) => {
+        temp.push({
+          item: {
+            ...data,
+          },
+        });
+        dispatch(setCart(temp));
       });
     });
   };
@@ -153,6 +182,9 @@ const ProductPage: React.FC = () => {
                 bg="secondary"
                 size={"lg"}
                 py={"7"}
+                onClick={() => {
+                  addToCart();
+                }}
               >
                 Add to cart
               </Button>

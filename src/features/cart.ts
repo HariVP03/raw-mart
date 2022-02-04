@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type item = {
-  prodImage: string[];
-  category: string;
-  productName: string;
-  price: number;
-  currency: string;
-  discount?: number;
-};
-
 const initialValue = null as any;
 
 export const cartSlice = createSlice({

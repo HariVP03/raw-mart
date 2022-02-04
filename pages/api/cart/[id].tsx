@@ -10,6 +10,7 @@ const handle = async (req: any, res: any) => {
     },
     select: {
       item: true,
+      id: true,
     },
   });
   res.json(items);

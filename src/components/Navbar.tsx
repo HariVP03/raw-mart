@@ -115,17 +115,21 @@ const Navbar: React.FC = () => {
             bg="green"
             width="40px"
             src={avatar}
+            onClick={() => console.log(user.photoURL)}
           />
           <Portal>
             <MenuList zIndex="30" bg="secondary">
-              {user ? (
+              {auth.currentUser ? (
                 <>
-                  <MenuItem>Your Cart</MenuItem>
-                  <MenuItem>Sign Out</MenuItem>
+                  <MenuItem onClick={() => onOpen()}>Your Cart</MenuItem>
+                  <MenuItem>Sell Item</MenuItem>
+                  <MenuItem onClick={() => auth.signOut()}>Sign Out</MenuItem>
                 </>
               ) : (
                 <>
-                  <MenuItem>Sign in with Google</MenuItem>
+                  <MenuItem onClick={() => signIn()}>
+                    Sign in with Google
+                  </MenuItem>
                   <MenuItem>Sign in with GitHub</MenuItem>
                 </>
               )}
