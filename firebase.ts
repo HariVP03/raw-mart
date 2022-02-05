@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtujTSob6Dv5OepqzchVHlbnpQBzQwKIk",
@@ -22,3 +23,4 @@ isSupported().then((supported) => {
 
 export const provider = new GoogleAuthProvider();
 export const auth = getAuth();
+export const storage = getStorage();

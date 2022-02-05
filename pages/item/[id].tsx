@@ -142,15 +142,19 @@ const ProductPage: React.FC = () => {
                     {tempCurrencies[currency].symbol}
                     {prevPrice}
                   </Text>
-                  <Text
-                    color={useColorModeValue("gray.900", "gray.400")}
-                    fontWeight={300}
-                    decoration="line-through"
-                    fontSize={"2xl"}
-                  >
-                    {tempCurrencies[currency].symbol}
-                    {price}
-                  </Text>
+                  {discount !== 0 ? (
+                    <Text
+                      color={"gray.400"}
+                      fontWeight={300}
+                      decoration="line-through"
+                      fontSize={"2xl"}
+                    >
+                      {tempCurrencies[currency].symbol}
+                      {price}
+                    </Text>
+                  ) : (
+                    ""
+                  )}
                 </Flex>
               </Box>
 
