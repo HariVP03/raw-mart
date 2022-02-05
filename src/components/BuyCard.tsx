@@ -83,12 +83,12 @@ const BuyCard: React.FC<{
       <div className="flex">
         <p className="text-blue-500">
           {currenciesObj[currency].symbol}
-          {currentPrice}
+          {currentPrice.toLocaleString()}
         </p>
         {discount !== 0 ? (
           <p className="text-blue-500 ml-3 line-through">
             {currenciesObj[currency].symbol}
-            {prevPrice}
+            {prevPrice?.toLocaleString()}
           </p>
         ) : (
           ""

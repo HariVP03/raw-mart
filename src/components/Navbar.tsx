@@ -14,6 +14,7 @@ import Image from "next/image";
 import {
   Avatar,
   Button,
+  chakra,
   Input,
   InputGroup,
   InputLeftElement,
@@ -77,20 +78,18 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="flex fixed z-20 max-w-[100vw] min-w-[100vw] h-[9vh] bg-gray-800 items-center justify-between align-center text-gray-200">
-      <h1 className="text-3xl w-32 text-center font-bold cursor-pointer font-logo ml-5">
+      <chakra.h1
+        fontSize={["2xl", "3xl", "4xl"]}
+        className="text-3xl w-32 text-center font-bold cursor-pointer font-logo ml-5"
+      >
         <Link href="/">店 Mart</Link>
-      </h1>
+      </chakra.h1>
 
       <InputGroup w="70%" justify="center" display="flex" align="center">
         <InputLeftElement pointerEvents="none">
           <FiSearch />
         </InputLeftElement>
-        <Input
-          // className="text-gray-200 border-[1px] border-none transition-outline duration-100 bg-search focus:outline-highlight focus:outline-1 w-[75%] h-[60%] text-md px-2 placeholder:italic placeholder:text-slate-400 outline-none"
-          placeholder="Search..."
-          color="gray.200"
-          variant="filled"
-        />
+        <Input placeholder="Search..." color="gray.200" variant="filled" />
       </InputGroup>
       <Cart isOpen={isOpen} onClose={onClose} />
       <div className="flex gap-5 w-48 justify-end items-center mr-5">

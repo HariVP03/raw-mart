@@ -21,26 +21,35 @@ import Navbar from "../src/components/Navbar";
 import { userState } from "../src/store";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import router from "next/router";
-
+import { sellItem } from "../src/types";
 const Sell: React.FC = () => {
-  const [itemData, setItemData] = useState<{
-    name: string;
-    currency: string;
-    price: number;
-    description: string;
-    images: string[];
-  }>({
+  const [itemData, setItemData] = useState<sellItem>({
     name: "",
     currency: "",
     price: 0,
     description: "",
     images: [],
+    category: "",
+    stock: 0,
   });
   const [img, setImg] = useState<Blob>();
   const [loading, setLoading] = useState<boolean>(false);
   const user = JSON.parse(
     useSelector((state: userState) => state.user.value) || "{}"
   ) as User | null;
+
+  const reset = () => {
+    setItemData({
+      name: "",
+      currency: "",
+      price: 0,
+      description: "",
+      images: [],
+      category: "",
+      stock: 0,
+    });
+    setImg(undefined);
+  };
 
   const setName = (name: string) => {
     setItemData({ ...itemData, name });
@@ -54,22 +63,41 @@ const Sell: React.FC = () => {
     setItemData({ ...itemData, price });
   };
 
+  const setCategory = (category: string) => {
+    setItemData({ ...itemData, category });
+  };
+
   const setDesc = (description: string) => {
     setItemData({ ...itemData, description });
   };
 
+  const setStock = (stock: number) => {
+    setItemData({ ...itemData, stock });
+  };
+
   const onSubmit = async () => {
     setLoading(true);
-    if (!img) return;
+    if (
+      !img ||
+      typeof itemData.stock !== "number" ||
+      typeof itemData.price !== "number"
+    ) {
+      setLoading(false);
+      return;
+    }
     const imgRef = ref(
       storage,
       `/images/${user?.email}/${Math.random() * 100000}`
     );
     uploadBytes(imgRef, img).then((snap) => {
       getDownloadURL(snap.ref).then((url) => {
+        // Send POST Request
+        fetch("/api/sellItem", {
+          method: "POST",
+          body: JSON.stringify({ ...itemData, images: [url] }),
+        });
+        reset();
         setLoading(false);
-        setItemData({ ...itemData, images: [url] });
-        // Send POST Reguest
         router.push("/");
       });
     });
@@ -98,6 +126,7 @@ const Sell: React.FC = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Name of the product"
               variant="filled"
+              value={itemData.name}
             />
           </FormControl>
           <FormControl mb={2}>
@@ -106,6 +135,25 @@ const Sell: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value)}
               placeholder="Currency Code"
               variant="filled"
+              value={itemData.currency}
+            />
+          </FormControl>
+          <FormControl mb={2}>
+            <FormLabel>Category</FormLabel>
+            <Input
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Category"
+              variant="filled"
+              value={itemData.category}
+            />
+          </FormControl>
+          <FormControl mb={2}>
+            <FormLabel>Stock</FormLabel>
+            <Input
+              onChange={(e) => setStock(parseInt(e.target.value))}
+              placeholder="Stock"
+              variant="filled"
+              value={itemData.stock}
             />
           </FormControl>
           <FormControl mb={2}>
@@ -113,6 +161,7 @@ const Sell: React.FC = () => {
             <Input
               onChange={(e) => setPrice(parseInt(e.target.value))}
               placeholder="Price"
+              value={itemData.price}
               variant="filled"
             />
           </FormControl>
@@ -122,6 +171,7 @@ const Sell: React.FC = () => {
               onChange={(e) => setDesc(e.target.value)}
               placeholder="Describe your product"
               variant="filled"
+              value={itemData.description}
             />
           </FormControl>
           <Flex
@@ -207,10 +257,9 @@ const Sell: React.FC = () => {
               </Text>
             </Stack>
           </Flex>
-          <Flex mt={10}>
+          <Flex mt={10} pb="50px">
             <Button
               onClick={() => {
-                console.log(itemData);
                 onSubmit();
               }}
               variant="outline"
@@ -222,7 +271,7 @@ const Sell: React.FC = () => {
             >
               Add
             </Button>
-            <Button>Close</Button>
+            <Button onClick={reset}>Clear</Button>
           </Flex>
         </Flex>
       </Flex>

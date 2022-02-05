@@ -140,7 +140,7 @@ const ProductPage: React.FC = () => {
                     mr={2}
                   >
                     {tempCurrencies[currency].symbol}
-                    {prevPrice}
+                    {prevPrice.toLocaleString()}
                   </Text>
                   {discount !== 0 ? (
                     <Text
@@ -150,7 +150,7 @@ const ProductPage: React.FC = () => {
                       fontSize={"2xl"}
                     >
                       {tempCurrencies[currency].symbol}
-                      {price}
+                      {price.toLocaleString()}
                     </Text>
                   ) : (
                     ""
