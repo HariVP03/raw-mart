@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
         <Link href="/">店 Mart</Link>
       </chakra.h1>
 
-      <InputGroup w="70%" justify="center" display="flex" align="center">
+      <InputGroup w="70%" justifyContent="center" display="flex" align="center">
         <InputLeftElement pointerEvents="none">
           <FiSearch />
         </InputLeftElement>
