@@ -92,7 +92,8 @@ const Cart: React.FC<{
           <Button
             isDisabled={data?.length === 0}
             onClick={() => {
-              console.log(data);
+              // console.log(data);
+              createCheckoutSession();
             }}
           >
             Proceed to Checkout
