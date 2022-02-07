@@ -15,20 +15,19 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { User } from "firebase/auth";
+import { User } from "@firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCart } from "react-icons/bs";
 import { MdLocalShipping } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Carousel } from "react-responsive-carousel";
-import { auth } from "../../firebase";
-import prisma from "../../lib/prisma";
+import Stripe from "stripe";
 import { currencies } from "../../lib/utilities/currencies";
 import Navbar from "../../src/components/Navbar";
 import { setCart } from "../../src/features/cart";
 import { userState } from "../../src/store";
+import getStripe from "../../src/stripe/getStripe";
 import { item } from "../../types/collectionTypes";
 
 const ProductPage: React.FC = () => {
@@ -178,7 +177,6 @@ const ProductPage: React.FC = () => {
                   </Text>
                 </VStack>
               </Stack>
-
               <Button
                 variant="outline"
                 mt={8}
@@ -192,7 +190,6 @@ const ProductPage: React.FC = () => {
               >
                 Add to cart
               </Button>
-
               <Stack direction="row" alignItems="center">
                 <MdLocalShipping />
                 <Text>2-3 business days delivery</Text>

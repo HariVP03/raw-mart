@@ -263,6 +263,9 @@ const Sell: React.FC = () => {
                 onSubmit();
               }}
               variant="outline"
+              isDisabled={
+                itemData.price >= 10000 && itemData.currency === "USD"
+              }
               isLoading={loading}
               loadingText="Adding"
               mr={4}
