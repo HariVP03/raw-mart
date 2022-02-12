@@ -87,7 +87,12 @@ const Home: NextPage = () => {
               <SectionBox
                 link="/raw-material"
                 name="Raw Material"
-                images={["", "", "", ""]}
+                images={[
+                  "https://lh3.google.com/u/0/d/1ynaiwMoqy6gMCZ6FS3YXz16ZtOGPEgGO=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/16q0Ph8BAYJAT7BXm1mQuz3uQSu1NZDyA=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/1Fgo_dR1mTblQatf0Ngjxq51_IObbeTTG=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/1oXRj282zGgso8SWnFPNSEV1JF2DQiMa2=w1920-h601-iv1",
+                ]}
               />
               <SectionBox
                 link="/harvested"
