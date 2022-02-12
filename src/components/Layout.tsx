@@ -259,7 +259,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Scrap Mart
+        Raw Mart
       </Text>
 
       <Cart isOpen={isOpen} onClose={onClose} />
