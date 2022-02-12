@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
 import BuyCard from "../src/components/BuyCard";
 import Navbar from "../src/components/Navbar";
@@ -7,11 +7,14 @@ import { item } from "../types/collectionTypes";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { Flex, Image } from "@chakra-ui/react";
+import { chakra, Flex, Image } from "@chakra-ui/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/bundle";
 import styles from "../styles/carousel.module.css";
+import SectionBox from "../src/components/SectionBox";
+import Layout from "../src/components/Layout";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Home: NextPage = () => {
   const [items, setItems] = useState<item[] | null>();
@@ -33,70 +36,89 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Mise Mart | Buy and Sell with ease</title>
+        <title>Raw Mart</title>
         <meta name="description" content="Ecommerce but better" />
         <link rel="icon" href="/store.png" />
       </Head>
 
-      <main>
-        <div className="flex flex-col pb-[10vh] min-h-screen w-screen text-gray-200 ">
-          <Navbar />
-          <Flex w="100vw" mt="9vh">
-            <Swiper
-              navigation={true}
-              modules={[Navigation]}
-              className={styles.swiper}
-              color="black"
-              style={{ height: "50vh" }}
-            >
-              <SwiperSlide className={styles["swiper-slide"]}>
-                <Image
-                  w="full"
-                  h="full"
-                  objectFit="cover"
-                  src="https://images.unsplash.com/photo-1607083207685-aaf05f2c908c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                  alt="Cyan-Illustrated-And-Traditional-Maximalist-Maha-Navmi-Sale-Instagram-Post"
-                />
-              </SwiperSlide>
-              <SwiperSlide className={styles["swiper-slide"]}>
-                <Image
-                  w="full"
-                  h="full"
-                  objectFit="cover"
-                  src="https://images.unsplash.com/photo-1536408803730-06d570c65a79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                  alt="Cyan-Illustrated-And-Traditional-Maximalist-Maha-Navmi-Sale-Instagram-Post"
-                />
-              </SwiperSlide>
+      <Layout>
+        <main>
+          <div className="flex flex-col pb-[10vh] min-h-screen text-gray-200 ">
+            {/* <Navbar /> */}
+            <Flex mt="9vh">
+              <Swiper
+                navigation={true}
+                modules={[Navigation]}
+                className={styles.swiper}
+                color="black"
+                style={{ height: "50vh", zIndex: 1 }}
+              >
+                <SwiperSlide className={styles["swiper-slide"]}>
+                  <Image
+                    w="full"
+                    h="full"
+                    objectFit="cover"
+                    src="https://lh3.google.com/u/0/d/1SnNiP1pevpK5FyYgPMJvcPSYq5rhpv4Y=w1920-h913-iv1"
+                    alt="Image 1"
+                  />
+                </SwiperSlide>
+                <SwiperSlide className={styles["swiper-slide"]}>
+                  <Image
+                    w="full"
+                    h="full"
+                    src="https://lh3.google.com/u/0/d/1jnvQVFk7BPCCyvok22SaYfE3yRwZ6wNz=w1920-h601-iv1"
+                    objectFit="cover"
+                    alt="Image 2"
+                  />
+                </SwiperSlide>
 
-              <SwiperSlide className={styles["swiper-slide"]}>
-                <Image
-                  w="full"
-                  h="full"
-                  objectFit="cover"
-                  src="https://images.unsplash.com/photo-1585750130716-42e238075a88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                  alt="Cyan-Illustrated-And-Traditional-Maximalist-Maha-Navmi-Sale-Instagram-Post"
-                />
-              </SwiperSlide>
-            </Swiper>
-          </Flex>
-          <div className="flex mt-[10vh] flex-wrap w-screen">
-            {items?.map((e) => {
-              return (
-                <BuyCard
-                  id={e.id}
-                  prodImage={e.images}
-                  desc={e.description}
-                  currency={e.currency}
-                  price={e.price}
-                  productName={e.name}
-                  discount={e.discount}
-                  key={e.id}
-                />
-              );
-            })}
+                <SwiperSlide className={styles["swiper-slide"]}>
+                  <Image
+                    w="full"
+                    h="full"
+                    objectFit="cover"
+                    src="https://lh3.google.com/u/0/d/14Xb-xrd_cIvmxog_nqTtfAywEmoSZ1bh=w1920-h601-iv1"
+                    alt="image 3"
+                  />
+                </SwiperSlide>
+              </Swiper>
+            </Flex>
+            <Flex flexWrap="wrap" justify="space-around" align="center" my={12}>
+              <SectionBox
+                link="/raw-material"
+                name="Raw Material"
+                images={["", "", "", ""]}
+              />
+              <SectionBox
+                link="/hahaok2"
+                name="Harvested E-waste"
+                images={["", "", "", ""]}
+              />
+              <SectionBox
+                link="/hahaok3"
+                name="Re-cycled"
+                images={["", "", "", ""]}
+              />
+            </Flex>
+            <chakra.div px={14} className="flex flex-wrap">
+              {items?.map((e) => {
+                return (
+                  <BuyCard
+                    id={e.id}
+                    prodImage={e.images}
+                    desc={e.description}
+                    currency={e.currency}
+                    price={e.price}
+                    productName={e.name}
+                    discount={e.discount}
+                    key={e.id}
+                  />
+                );
+              })}
+            </chakra.div>
           </div>
-        </div>
-      </main>
+        </main>
+      </Layout>
     </div>
   );
 };

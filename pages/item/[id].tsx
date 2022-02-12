@@ -14,6 +14,7 @@ import {
   StackDivider,
   useColorModeValue,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { User } from "@firebase/auth";
 import Head from "next/head";
@@ -24,6 +25,7 @@ import { MdLocalShipping } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Stripe from "stripe";
 import { currencies } from "../../lib/utilities/currencies";
+import Layout from "../../src/components/Layout";
 import Navbar from "../../src/components/Navbar";
 import { setCart } from "../../src/features/cart";
 import { userState } from "../../src/store";
@@ -65,6 +67,8 @@ const ProductPage: React.FC = () => {
     });
   };
 
+  const toast = useToast();
+
   const addToCart = () => {
     if (user === null) return;
     let temp = JSON.parse(JSON.stringify(cart));
@@ -81,6 +85,13 @@ const ProductPage: React.FC = () => {
           },
         });
         dispatch(setCart(temp));
+        toast({
+          title: "Item added to cart",
+          description: "We've added the item in your cart",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
       });
     });
   };
@@ -103,101 +114,103 @@ const ProductPage: React.FC = () => {
       <Head>
         <title>{productName}</title>
       </Head>
-      <Navbar />
-      <Flex maxW="100vw" minH="100vh" justify="center">
-        <Container maxW={"7xl"}>
-          <SimpleGrid
-            columns={{ base: 1, lg: 2 }}
-            spacing={{ base: 8, md: 10 }}
-            py={{ base: 18, md: 24 }}
-          >
-            <Flex>
-              <Image
-                rounded={"md"}
-                alt={"product image"}
-                src={images[0]}
-                fit={"cover"}
-                align={"center"}
-                w={"100%"}
-                h={{ base: "100%", sm: "400px", lg: "500px" }}
-              />
-            </Flex>
-            <Stack spacing={{ base: 6, md: 10 }}>
-              <Box as={"header"}>
-                <Heading
-                  lineHeight={1.1}
-                  fontWeight={600}
-                  fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
-                >
-                  {productName}
-                </Heading>
-                <Flex mt={2}>
-                  <Text
-                    color={useColorModeValue("gray.900", "gray.400")}
-                    fontWeight={300}
-                    fontSize={"2xl"}
-                    mr={2}
+      {/* <Navbar /> */}
+      <Layout>
+        <Flex minH="100vh" justify="center">
+          <Container maxW={"7xl"}>
+            <SimpleGrid
+              columns={{ base: 1, lg: 2 }}
+              spacing={{ base: 8, md: 10 }}
+              py={{ base: 18, md: 24 }}
+            >
+              <Flex>
+                <Image
+                  rounded={"md"}
+                  alt={"product image"}
+                  src={images[0]}
+                  fit={"cover"}
+                  align={"center"}
+                  w={"100%"}
+                  h={{ base: "100%", sm: "400px", lg: "500px" }}
+                />
+              </Flex>
+              <Stack spacing={{ base: 6, md: 10 }}>
+                <Box as={"header"}>
+                  <Heading
+                    lineHeight={1.1}
+                    fontWeight={600}
+                    fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
                   >
-                    {tempCurrencies[currency].symbol}
-                    {prevPrice.toLocaleString()}
-                  </Text>
-                  {discount !== 0 ? (
+                    {productName}
+                  </Heading>
+                  <Flex mt={2}>
                     <Text
-                      color={"gray.400"}
+                      color={useColorModeValue("gray.900", "gray.400")}
                       fontWeight={300}
-                      decoration="line-through"
                       fontSize={"2xl"}
+                      mr={2}
                     >
                       {tempCurrencies[currency].symbol}
-                      {price.toLocaleString()}
+                      {prevPrice.toLocaleString()}
                     </Text>
-                  ) : (
-                    ""
-                  )}
-                </Flex>
-              </Box>
+                    {discount !== 0 ? (
+                      <Text
+                        color={"gray.400"}
+                        fontWeight={300}
+                        decoration="line-through"
+                        fontSize={"2xl"}
+                      >
+                        {tempCurrencies[currency].symbol}
+                        {price.toLocaleString()}
+                      </Text>
+                    ) : (
+                      ""
+                    )}
+                  </Flex>
+                </Box>
 
-              <Stack
-                spacing={{ base: 4, sm: 6 }}
-                direction={"column"}
-                divider={
-                  <StackDivider
-                    borderColor={useColorModeValue("gray.200", "gray.600")}
-                  />
-                }
-              >
-                <VStack spacing={{ base: 4, sm: 6 }}>
-                  <Text
-                    color={useColorModeValue("gray.500", "gray.400")}
-                    fontSize={"2xl"}
-                    fontWeight={"300"}
-                    w="full"
-                  >
-                    {desc}
-                  </Text>
-                </VStack>
+                <Stack
+                  spacing={{ base: 4, sm: 6 }}
+                  direction={"column"}
+                  divider={
+                    <StackDivider
+                      borderColor={useColorModeValue("gray.200", "gray.600")}
+                    />
+                  }
+                >
+                  <VStack spacing={{ base: 4, sm: 6 }}>
+                    <Text
+                      color={useColorModeValue("gray.500", "gray.400")}
+                      fontSize={"2xl"}
+                      fontWeight={"300"}
+                      w="full"
+                    >
+                      {desc}
+                    </Text>
+                  </VStack>
+                </Stack>
+                <Button
+                  variant="outline"
+                  mt={8}
+                  w="full"
+                  maxW="200px"
+                  size={"lg"}
+                  py={"7"}
+                  onClick={() => {
+                    addToCart();
+                  }}
+                >
+                  Add to cart
+                </Button>
+                <Stack direction="row" alignItems="center">
+                  <MdLocalShipping />
+                  <Text>2-3 business days delivery</Text>
+                </Stack>
               </Stack>
-              <Button
-                variant="outline"
-                mt={8}
-                w="full"
-                maxW="200px"
-                size={"lg"}
-                py={"7"}
-                onClick={() => {
-                  addToCart();
-                }}
-              >
-                Add to cart
-              </Button>
-              <Stack direction="row" alignItems="center">
-                <MdLocalShipping />
-                <Text>2-3 business days delivery</Text>
-              </Stack>
-            </Stack>
-          </SimpleGrid>
-        </Container>
-      </Flex>
+            </SimpleGrid>
+          </Container>
+        </Flex>
+      </Layout>
     </>
   );
 };

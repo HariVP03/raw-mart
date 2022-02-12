@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
         fontSize={["2xl", "3xl", "4xl"]}
         className="text-3xl w-32 text-center font-bold cursor-pointer font-logo ml-5"
       >
-        <Link href="/">店 Mart</Link>
+        <Link href="/">Raw Mart</Link>
       </chakra.h1>
 
       <InputGroup
@@ -106,7 +106,6 @@ const Navbar: React.FC = () => {
           w={12}
           h={12}
           variant="ghost"
-          // className="flex justify-center items-center hover:bg-gray-800 w-10 h-10 rounded-full transition-[background-color] duration-300"
         >
           <BsCart />
         </Button>

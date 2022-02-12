@@ -59,11 +59,10 @@ const Cart: React.FC<{
         console.warn(error.message);
       });
   };
-
   return (
     <Drawer isOpen={isOpen} onClose={onClose} placement="right" closeOnEsc>
       <DrawerOverlay />
-      <DrawerContent minW="400px">
+      <DrawerContent minW="600px">
         <DrawerHeader>Cart</DrawerHeader>
         <DrawerCloseButton />
         <DrawerBody p={1} display="flex" flexDir="column">

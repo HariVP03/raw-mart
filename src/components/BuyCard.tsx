@@ -5,7 +5,7 @@ import { currencies } from "../../lib/utilities/currencies";
 import { setCart } from "../features/cart";
 import { userState } from "../store";
 import Image from "next/image";
-import { Button, chakra } from "@chakra-ui/react";
+import { Button, chakra, useToast } from "@chakra-ui/react";
 
 const BuyCard: React.FC<{
   id: string;
@@ -57,9 +57,18 @@ const BuyCard: React.FC<{
           },
         });
         dispatch(setCart(temp));
+        toast({
+          title: "Item added to cart",
+          description: "We've added the item in your cart",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
       });
     });
   };
+
+  const toast = useToast();
 
   return (
     <chakra.div
@@ -67,7 +76,7 @@ const BuyCard: React.FC<{
         router.push(`/item/${id}`);
       }}
       _hover={{ bg: "gray.700" }}
-      className="flex flex-col items-center justify-center w-72 mx-3 cursor-pointer p-3 rounded-md duration-200"
+      className="flex flex-col items-center justify-center w-72 cursor-pointer p-3 rounded-md duration-200"
     >
       <Image
         className="object-cover w-full rounded-md h-72"
