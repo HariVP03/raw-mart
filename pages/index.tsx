@@ -107,7 +107,12 @@ const Home: NextPage = () => {
               <SectionBox
                 link="/recycled"
                 name="Re-cycled"
-                images={["", "", "", ""]}
+                images={[
+                  "https://lh3.google.com/u/0/d/1cfHfoA7ks8aSZNBLorVq6NOdo0PFlKfm=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/1Nmfdwar2dePnTfsRp8aFk-HN9oPsC5Zo=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/1BmruI7ajGb4fD8P5R-iPf7ifSwRRWX8Z=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/1CjhcGdEkc15V-wYQvS96xo51G7xF5B0c=w1920-h601-iv1",
+                ]}
               />
             </Flex>
             <chakra.div px={14} className="flex flex-wrap">
