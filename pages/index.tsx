@@ -45,7 +45,7 @@ const Home: NextPage = () => {
         <main>
           <div className="flex flex-col pb-[10vh] min-h-screen text-gray-200 ">
             {/* <Navbar /> */}
-            <Flex mt="9vh">
+            <Flex>
               <Swiper
                 navigation={true}
                 modules={[Navigation]}
