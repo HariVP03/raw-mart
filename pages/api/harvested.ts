@@ -4,7 +4,7 @@ import prisma from "../../lib/prisma";
 const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const items = await prisma.item.findMany({
     where: {
-      category: "Hahaok3",
+      category: "Harvested e-waste",
     },
   });
   res.json(items);

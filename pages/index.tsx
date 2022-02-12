@@ -90,12 +90,12 @@ const Home: NextPage = () => {
                 images={["", "", "", ""]}
               />
               <SectionBox
-                link="/hahaok2"
+                link="/harvested"
                 name="Harvested E-waste"
                 images={["", "", "", ""]}
               />
               <SectionBox
-                link="/hahaok3"
+                link="/recycled"
                 name="Re-cycled"
                 images={["", "", "", ""]}
               />

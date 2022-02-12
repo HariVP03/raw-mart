@@ -5,10 +5,10 @@ import BuyCard from "../src/components/BuyCard";
 import Layout from "../src/components/Layout";
 import Navbar from "../src/components/Navbar";
 
-const RawMaterial: React.FC = () => {
+const Hahaok2: React.FC = () => {
   const [items, setItems] = useState([]);
   const getItems = async () => {
-    fetch("/api/rawMaterial", {
+    fetch("/api/harvested", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     }).then((res) => {
@@ -25,12 +25,13 @@ const RawMaterial: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Raw Mart | Raw Material</title>
+        <title>Raw Mart | Harvested E-waste</title>
       </Head>
       <Flex minH="100vw" maxW="100vw" direction="column">
+        {/* <Navbar /> */}
         <Layout>
           <chakra.h2 fontSize="3xl" ml={8}>
-            Raw Material
+            Harvested E-waste
           </chakra.h2>
           <Flex maxW="100vw" flexWrap="wrap" m={5}>
             {items?.map((e: any) => {
@@ -54,4 +55,4 @@ const RawMaterial: React.FC = () => {
   );
 };
 
-export default RawMaterial;
+export default Hahaok2;

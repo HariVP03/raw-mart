@@ -185,6 +185,8 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
+        transition="all"
+        transitionDuration="200ms"
         _hover={{
           bg: "cyan.400",
           color: "white",
