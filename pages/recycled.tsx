@@ -28,8 +28,6 @@ const Hahaok3: React.FC = () => {
         <title>Raw Mart | Recycled</title>
       </Head>
       <Flex minH="100vw" maxW="100vw" direction="column">
-        {/* <Navbar /> */}
-
         <Layout>
           <chakra.h2 fontSize="3xl" ml={8}>
             Recycled

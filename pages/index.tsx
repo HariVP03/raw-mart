@@ -97,7 +97,12 @@ const Home: NextPage = () => {
               <SectionBox
                 link="/harvested"
                 name="Harvested E-waste"
-                images={["", "", "", ""]}
+                images={[
+                  "https://lh3.google.com/u/0/d/1C72TgFJB7kYw8MMakXbDy_xzccWRZXKl=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/12-XP-g856u21vplhEGyHR4b_7CmZWe5e=w1920-h601-iv2",
+                  "https://lh3.google.com/u/0/d/1zbg9q7y8ntGrc1e_5vUAetEPvUkQ25FL=w1920-h601-iv1",
+                  "https://lh3.google.com/u/0/d/1cfHfoA7ks8aSZNBLorVq6NOdo0PFlKfm=w1920-h601-iv1",
+                ]}
               />
               <SectionBox
                 link="/recycled"
